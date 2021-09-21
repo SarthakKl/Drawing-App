@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Android Projects/DrawingApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.22447916666666667" />
+        <entry key="..\:/Android Projects/DrawingApp/app/src/main/res/drawable/Red.xml" value="0.221025641025641" />
+        <entry key="..\:/Android Projects/DrawingApp/app/src/main/res/drawable/brush_dialog.xml" value="0.22447916666666667" />
+        <entry key="..\:/Android Projects/DrawingApp/app/src/main/res/drawable/drawing_view_background.xml" value="0.22447916666666667" />
+        <entry key="..\:/Android Projects/DrawingApp/app/src/main/res/drawable/imagebuttons_bg.xml" value="0.16203703703703703" />
+        <entry key="..\:/Android Projects/DrawingApp/app/src/main/res/drawable/large_brush_size.xml" value="0.22447916666666667" />
+        <entry key="..\:/Android Projects/DrawingApp/app/src/main/res/drawable/medium_brushSize_layout.xml" value="0.22447916666666667" />
+        <entry key="..\:/Android Projects/DrawingApp/app/src/main/res/drawable/medium_brush_size.xml" value="0.22447916666666667" />
+        <entry key="..\:/Android Projects/DrawingApp/app/src/main/res/drawable/pallete_normal.xml" value="0.221025641025641" />
+        <entry key="..\:/Android Projects/DrawingApp/app/src/main/res/drawable/pallete_pressed.xml" value="0.221025641025641" />
+        <entry key="..\:/Android Projects/DrawingApp/app/src/main/res/drawable/red.xml" value="0.22314814814814815" />
+        <entry key="..\:/Android Projects/DrawingApp/app/src/main/res/drawable/small_brush_size.xml" value="0.22447916666666667" />
+        <entry key="..\:/Android Projects/DrawingApp/app/src/main/res/layout/activity_main.xml" value="0.37962962962962965" />
+        <entry key="..\:/Android Projects/DrawingApp/app/src/main/res/layout/activity_mainx.xml" value="0.2033514492753623" />
+        <entry key="..\:/Android Projects/DrawingApp/app/src/main/res/layout/brush_thickness.xml" value="0.1" />
+        <entry key="..\:/Android Projects/DrawingApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.22447916666666667" />
+        <entry key="..\:/Android Projects/DrawingApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.22447916666666667" />
+        <entry key="..\:/Android Projects/DrawingApp/app/src/main/res/xml/path.xml" value="0.20833333333333334" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+  <component name="SuppressKotlinCodeStyleNotification">
+    <option name="disableForAll" value="true" />
+  </component>
+</project>

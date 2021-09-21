@@ -1,0 +1,178 @@
+Concepts/Steps for making this project
+
+1) First we have to create our Drawing view and for that we have to create a new kotlin class named (say Drawing View). Then we have to declare some variables
+    which are as follows-:
+	(a) var extraBitmap:Bitmap?=null     // You can read about bitmap and canvas from the collections in Microsoft edge. I have added the source for the same.
+	(b) var extraCanvas:Canvas?=null
+	(c) var drawPaint: Paint?=null        // We can set the configurations such as color, strokeWidth, strokeCap using(Analogy to pen)
+	(d) var brushSize:float?=null    
+	(e) var drawPath:CustomPath?=null
+	(f) var color=Color.BLACK
+
+	private class customPath(drawColor:Int, brushthickness:float):Path(){}   // We have created a sub class of the Path() class. Hence it will inherit all the 
+								//open methods and members of the Path() class
+
+2) We we declare the initialize all the above variables in the init block when an instance of the drawing view class is created. 
+
+3)Then we will override the onSizeChanged function which requires the the old and new values of the height and width of the bitmap. Whenever the size
+   of the bitmap is changed, this function is called and hence the new bitmap and the canvas is created accordingly to the new height and width.
+
+4)Then we will override onDraw() method which is called whenever something is drawn on the view. This method actually performs the 
+    drawing on the canvas and bitmap. invaidate() is called whenever we want to call the draw function.
+
+5) For onDraw() method first we have to detect the touch, and which touchEvent will do what. For that we have to override the onTouchEvent() method.
+	fun OnTouchEvent(Event?: MotionEvent)
+	{
+		val touchx=event.x
+		val touchy=event.y
+	
+		when(event.action){
+			MotionEvent.ACTION_DOWN ->{
+				drawPath!!.color=color
+				drawPath!!.brushThickness= brushSize
+
+				drawPath.reset()
+				drawPath!!.moveTo(x,y)
+			}
+		}
+
+		similarly we will declare the other two motion events : ACTION_MOVE and ACTION_UP 
+	
+	}
+6) Now we have to implement various action buttons such as -
+	gallery button- For importing photos from gallery to our background.
+	color picker- For changing the color of the brush.
+	Brush size button- For changing the size of the brush.
+	undo button- For getting the previous path drawn.
+	save button- For saving the image to the external image(not in app specific directory)
+	share button- For sharing the saved bitmap(image) to various other app such as email, whatsapp.
+
+7) GALLERY BUTTON IMPLEMENTATION
+
+We have to create a image button whose hierarchy will be like this-
+	Constraint Layout-> Lineary Layout -> Gallery Image button
+Before setting the OnClickListener for this button we have to get the required permission from the android for opening the gallery. 
+a) Add <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        						android:maxSdkVersion="28"/>   // We don't need permission for saving files in collections after sdkVersion 28.
+in the manifest file just before application.
+
+b) setOnClickListener for the gallery button and implement the following code.
+	if (checkForPermission()) {
+                        val galleryIntent =
+                        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                        getImage.launch(galleryIntent)
+                 } else
+                        askForPermission()
+
+
+	// startActivityResult is deprecated. Instead we use following method where we declare any function(getImage) with registerForActivityResult 
+		private val getImage =registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+        		{ result: ActivityResult ->
+
+            			if (result.resultCode == Activity.RESULT_OK) {
+                				if (result.data != null) {
+                    				val image = findViewById<ImageView>(R.id.Image)
+                    				image.visibility = View.VISIBLE
+                    				image.setImageURI(result.data!!.data)
+                    				imageSaved = false
+                				} else
+                    				Toast.makeText(
+                        				this,
+                        				"ERROR FETCHING IMAGE FROM THE GALLERY",
+                        				Toast.LENGTH_SHORT
+                    				)
+                        				.show()
+            			} else {
+                				Toast.makeText(
+                   			 applicationContext,
+                    			"CANT GET IMAGE FROM THE GALLERY",
+                  			  Toast.LENGTH_SHORT
+                				).show()
+            			}
+       		 }
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	// checkForPermission ()
+			private fun checkForPermission():Boolean{
+				val bool: Boolean
+        				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+           					bool = ActivityCompat.checkSelfPermission(
+                						this,
+                						Manifest.permission.READ_EXTERNAL_STORAGE
+            					) == PackageManager.PERMISSION_GRANTED
+        				} else {
+           					 bool = (ActivityCompat.checkSelfPermission(
+                							this,
+                							Manifest.permission.READ_EXTERNAL_STORAGE
+            						) == PackageManager.PERMISSION_GRANTED) &&
+						(ActivityCompat.checkSelfPermission(
+                        						this,
+                        						Manifest.permission.WRITE_EXTERNAL_STORAGE
+                   					 ) == PackageManager.PERMISSION_GRANTED)
+       				 }
+
+       				 return bool
+			}
+	//askForPermission()
+	   We have to check for -
+			ActivityCompat.shouldShowRequestPermissionRationale(
+                				this,
+                				Manifest.permission.READ_EXTERNAL_STORAGE
+            			) ||
+           			 ActivityCompat.shouldShowRequestPermissionRationale(
+                				this,
+                				Manifest.permission.WRITE_EXTERNAL_STORAGE)
+	if it is true it means permission has been denied once. And user has again asked for the permission. U can pass any toast message explaining the reason for permission.
+	
+	Then we need to requestForPermission using-
+			        ActivityCompat.requestPermissions(
+          				  this, arrayOf(
+                				Manifest.permission.READ_EXTERNAL_STORAGE,
+                				Manifest.permission.WRITE_EXTERNAL_STORAGE
+            				), STORAGE_REQUEST_CODE
+        			         ) 
+
+	//onRequestPermissionsResult -> Documentation available for this function on web
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Now we need to set up the content provider for our app. For this we are first create a directory in the res directory inside which we are gonaa create a xml file
+where we declare the path for the content provider.
+	<paths  xmlns:android="http://schemas.android.com/apk/res/android">
+    		<external-path
+       			 name="captured"
+       			 path="Android/data/com.example.drawingapp/files"/>
+	</paths>
+and then we are gonna declare a provider element in the manifest. Documentation available for this provider element on the web.
+	        <provider
+            		android:authorities="com.example.drawingapp.fileprovider"
+            		android:name="androidx.core.content.FileProvider"
+            		android:exported="false"
+            		android:grantUriPermissions="true">
+            		<meta-data
+                			android:name="android.support.FILE_PROVIDER_PATHS"
+                			android:resource="@xml/path"/>
+        	       </provider>
+
+8) COLOR PICKER IMPLEMENTAION 
+I have used the color picker library by dhaval patel from github.
+	implementation 'com.github.dhaval2404:colorpicker:2.0'   -> Add this inside dependecies of build gradle(module)
+then we will setOnClickListener for the color picker and do the further process of showing ColorPicker dialog....
+
+9) BRUSH SIZE IMPLEMENTAION
+
+Now we are gonna create a custom dialog for this functionality. At first we have to create a new layout xml file(brush_size.xml). Then we are gonna 
+create three drawable files for small, medium and large brush size. use this as backgound for the respective buttons inside the brush_size.xml.
+
+10) UNDO BUTTON IMPLEMENTAION
+
+We have to create a list allPaths of type CustomePath and then we will will store all the drawPath when ACTION.MOVE_UP is initialized inside onTouchEvent
+and we will also create another variable removedPath. Now we have to create a public function called undo which will be called whenever undo button is
+clicked.
+	fun undo(){
+        		if(allPaths.size>0)
+            			undoPaths.add(allPaths.removeAt(allPaths.size-1))
+        		invalidate()
+    	}
+	after invalidate() call onDraw method will be called- 
+
+
+	
