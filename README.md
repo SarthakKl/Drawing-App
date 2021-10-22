@@ -1,6 +1,6 @@
 # Drawing-App
 
-#About 
+# About 
 
 A simple drawing app based on the concepts of canvas and bitmap and created using kotlin programming language. Some salient features of this apps are:-
 
@@ -11,11 +11,11 @@ A simple drawing app based on the concepts of canvas and bitmap and created usin
 * Brush color can also be changed using color pallete very easly.
 * It is very simple to use and easy to understand.
 
-#Screenshots
+# Screenshots
 
 <img src='https://github.com/SarthakKl/Drawing-App/blob/master/app/Screenshot.jpeg' width="200" height="400">
 
-**Permissions**
+# Permissions
 
 No permissions requied.
 
