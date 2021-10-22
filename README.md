@@ -6,9 +6,9 @@ A simple drawing app based on the concepts of canvas and bitmap and created usin
 
 * User can change the font size of the brush.
 * User can also import image from the internal storage and use it as background.
-* This app provides the feature of sharing, so that u can share your drawing with another app like whatsapp.
+* This app provides the feature of sharing, so that you can share your drawing with another app like whatsapp.
 * You can also save the image to the internal storage of the phone.
-* Brush color can also be changed using color picker very easly.
+* Brush color can also be changed using color picker very easily.
 * It is very simple to use and easy to understand.
 
 # Screenshots
