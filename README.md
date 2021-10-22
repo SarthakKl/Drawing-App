@@ -15,3 +15,9 @@ A simple drawing app based on the concepts of canvas and bitmap and created usin
 
 <img src='https://github.com/SarthakKl/Drawing-App/blob/master/app/Screenshot.jpeg' width="200" height="400">
 
+**Permissions**
+
+No permissions requied.
+
+
+
